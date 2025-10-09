@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### JWT Keys ###
+src/main/resources/certs/private.pem
+src/main/resources/certs/keypair.pem
