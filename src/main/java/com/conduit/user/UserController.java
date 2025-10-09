@@ -16,13 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 class UserController {
     private final UserService service;
-    private final AuthenticationManager authManager;
-    private final JwtTokenHelper jwtTokenHelper;
 
-    public UserController(UserService service, AuthenticationManager authManager, JwtTokenHelper jwtTokenHelper) {
+    UserController(UserService service, AuthenticationManager authManager, JwtTokenHelper jwtTokenHelper) {
         this.service = service;
-        this.authManager = authManager;
-        this.jwtTokenHelper = jwtTokenHelper;
     }
 
     @PostMapping

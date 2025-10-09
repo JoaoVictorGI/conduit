@@ -39,12 +39,4 @@ public class SecurityUser implements UserDetails, Serializable {
     public String getUsername() {
         return email;
     }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getDisplayName() {
-        return username;
-    }
 }

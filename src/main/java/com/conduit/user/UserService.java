@@ -1,12 +1,10 @@
 package com.conduit.user;
 
-import com.conduit.user.dto.UserDTO;
 import com.conduit.user.dto.request.LoginUserRequestDTO;
 import com.conduit.user.dto.request.RegisterUserRequestDTO;
 import com.conduit.user.dto.response.UserWithoutIdAndPasswordResponse;
 import com.conduit.user.exception.DuplicateEmailException;
 import com.conduit.user.exception.InvalidCredentialsException;
-import com.conduit.user.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,10 +23,6 @@ class UserService {
         this.passwordEncoder = passwordEncoder;
         this.authManager = authManager;
         this.jwtTokenHelper = jwtTokenHelper;
-    }
-
-    UserDTO findByEmail(String email) {
-        return repository.findByEmail(email).map(UserMapper::toDto).orElseThrow(() -> new UserNotFoundException("Failed to retrieve user with email: " + email));
     }
 
     @Transactional
