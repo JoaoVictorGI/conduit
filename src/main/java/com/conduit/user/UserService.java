@@ -18,7 +18,11 @@ class UserService {
     private final AuthenticationManager authManager;
     private final JwtTokenHelper jwtTokenHelper;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, JwtTokenHelper jwtTokenHelper) {
+    public UserService(
+            UserRepository repository,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authManager,
+            JwtTokenHelper jwtTokenHelper) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.authManager = authManager;
@@ -28,7 +32,8 @@ class UserService {
     @Transactional
     UserWithoutIdAndPasswordResponse registerUser(RegisterUserRequestDTO dto) {
         if (repository.findByEmail(dto.user().email()).isPresent()) {
-            throw new DuplicateEmailException("E-mail already in use: " + dto.user().email());
+            throw new DuplicateEmailException(
+                    "E-mail already in use: " + dto.user().email());
         }
 
         var user = new User();
@@ -40,19 +45,16 @@ class UserService {
     }
 
     UserWithoutIdAndPasswordResponse loginUser(LoginUserRequestDTO dto) {
-        var authentication = new UsernamePasswordAuthenticationToken(dto.user().email(), dto.user().password());
+        var authentication = new UsernamePasswordAuthenticationToken(
+                dto.user().email(), dto.user().password());
         authManager.authenticate(authentication);
 
-        var user = repository.findByEmail(dto.user().email())
+        var user = repository
+                .findByEmail(dto.user().email())
                 .orElseThrow(() -> new InvalidCredentialsException("Invalid e-mail or password"));
 
         var jwtToken = jwtTokenHelper.generateToken(UserMapper.toDto(user));
         return new UserWithoutIdAndPasswordResponse(new UserWithoutIdAndPasswordResponse.UserData(
-                user.getEmail(),
-                jwtToken,
-                user.getUsername(),
-                user.getBio(),
-                user.getImage()
-        ));
+                user.getEmail(), jwtToken, user.getUsername(), user.getBio(), user.getImage()));
     }
 }

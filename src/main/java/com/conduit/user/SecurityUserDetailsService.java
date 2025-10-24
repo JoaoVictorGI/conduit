@@ -14,10 +14,10 @@ class SecurityUserDetailsService implements UserDetailsService {
         this.repository = repository;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByEmail(username)
+        return repository
+                .findByEmail(username)
                 .map(this::toSecurityUser)
                 .orElseThrow(() -> new UserNotFoundException("Failed to retrieve user with email: " + username));
     }

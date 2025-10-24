@@ -21,7 +21,9 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
-    private static final String[] publicResources = {"/", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/users/**"};
+    private static final String[] publicResources = {
+        "/", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/users/**"
+    };
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,9 +31,11 @@ class SecurityConfig {
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers(publicResources)
                         .permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest()
+                        .authenticated())
                 .oauth2ResourceServer(jwt -> jwt.jwt(Customizer.withDefaults()))
-                .exceptionHandling(auth -> auth.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .exceptionHandling(
+                        auth -> auth.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();

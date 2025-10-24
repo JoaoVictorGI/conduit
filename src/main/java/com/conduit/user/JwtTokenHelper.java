@@ -2,12 +2,11 @@ package com.conduit.user;
 
 import com.conduit.ApplicationProperties;
 import com.conduit.user.dto.UserDTO;
+import java.time.Instant;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
 
 @Component
 class JwtTokenHelper {

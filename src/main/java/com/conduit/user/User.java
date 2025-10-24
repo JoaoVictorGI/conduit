@@ -2,11 +2,10 @@ package com.conduit.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "usr")
@@ -16,8 +15,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Email
-    @Column(name = "email", nullable = false, unique = true)
+    @Email @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "username", nullable = false, unique = true)
@@ -36,10 +34,17 @@ public class User {
     @UpdateTimestamp
     private OffsetDateTime updatedAt;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(UUID id, String email, String username, String password, String bio, String image, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public User(
+            UUID id,
+            String email,
+            String username,
+            String password,
+            String bio,
+            String image,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt) {
         this.id = id;
         this.email = email;
         this.username = username;

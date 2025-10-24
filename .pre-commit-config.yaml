@@ -1,0 +1,16 @@
+repos:
+  - repo: local
+    hooks:
+      - id: maven-spotless-apply
+        name: maven spotless apply
+        description: automatically formats Java and SQL code using mvn spotless:apply.
+        entry: ./mvnw spotless:apply
+        language: system # Indicates that the 'entry' command should be run directly as a system command.
+        types: [ java, sql ] # Specifies that this hook should run on Java and Scala files.
+        pass_filenames:
+          false # Crucial: tells pre-commit NOT to pass filenames as arguments to 'mvn spotless:apply'.
+        # Spotless typically scans the whole project based on its configuration.
+        always_run:
+          true # Ensures this hook runs even if no Java files are changed.
+        # This is useful for spotless:apply which might affect files not staged.
+        stages: [ manual ]
